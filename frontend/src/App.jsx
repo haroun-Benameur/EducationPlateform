@@ -1,22 +1,24 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+
 import './App.css'
-import Counter from './components/Counter'
-import TaskList from './components/TaskList.JSX'
+import Home from './Screens/Home';
+import ParentPage from './Screens/ParentPage';
+import LessonsPage from './Screens/LessonsPage';
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
-   <h1 className='text-red-500' >Redux Toolkit with React Vite</h1> 
-   <Counter/>
-
-   <div>
-            <h1>React + Django + Redux Toolkit</h1>
-            <TaskList />
-    </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/parent" element={<ParentPage />} />
+          <Route path="/subject" element={<LessonsPage />} />
+        
+        </Routes>
+      </Router>
     </>
   )
 }
