@@ -1,27 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const initialState = {
-  value: 0,
-};
-
-export const counterSlice = createSlice({
-  name: 'counter',
-  initialState,
+export const userSlice = createSlice({
+  name: 'user',
+  initialState: { user: null, token: null },
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    loginSuccess: (state, action) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
     },
   },
 });
 
-// Export actions
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { loginSuccess, logout } = userSlice.actions;
 
-// Export reducer
-export default counterSlice.reducer;
+export const loginUser = (credentials) => async (dispatch) => {
+  const response = await axios.post('/api/token/', credentials);
+  dispatch(loginSuccess(response.data));
+};
+
+export default userSlice.reducer;
